@@ -1,0 +1,6 @@
+{
+    "email":"petrisorc65@gmail.com",
+    "password":"Student330530",
+    "url":"https://amprenta.at.assistcloud.services",
+    "loginRoute":"https://api.amprenta.at.assistcloud.services/api/v1/users/sign_in"
+}
