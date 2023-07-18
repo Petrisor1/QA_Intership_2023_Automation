@@ -1,3 +1,4 @@
 {
-    "Conectare":"https://amprenta.at.assistcloud.services/conectare"
+    "conectare":"https://amprenta.at.assistcloud.services/conectare",
+    "registration":"https://api.amprenta.at.assistcloud.services/api/v1/users/sign_up"
 }
