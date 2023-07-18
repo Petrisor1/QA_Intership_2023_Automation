@@ -53,7 +53,9 @@ describe("Test registration form",()=>{
             cy.visit(`${data.inregistrare}`)
             cy.contains("label", 'Parola').nextAll('div').find('i').next('input').type("1234567");
             cy.get("button[class='auth-register-button-try']").click();
-            cy.contains("label", 'Parola').siblings('p').should('have.text','Parola trebuie sa contina minim 8 caractere').should("be.visible");
+            cy.contains("label", 'Parola').siblings('p').should('have.text','Parola trebuie sa contina minim 8 caractere')
+            .should("be.visible")
+           
         })
         })
 
@@ -62,7 +64,9 @@ describe("Test registration form",()=>{
             cy.visit(`${data.inregistrare}`)
             cy.contains("label", 'Adresa de e-mail').nextAll('div').find('i').next('input').type("petrisorc65.gmail.com");
             cy.get("button[class='auth-register-button-try']").click();
-            cy.contains("label", 'Adresa de e-mail').siblings('p').should('have.text','Introdu o adresa de email corecta. E.g. example@email.com.').should("be.visible");
+            cy.contains("label", 'Adresa de e-mail').siblings('p').should('have.text','Introdu o adresa de email corecta. E.g. example@email.com.')
+            .should("be.visible")
+            
         })
     })
 
@@ -78,5 +82,19 @@ describe("Test registration form",()=>{
             cy.get('form input.input-field[placeholder="************"]').should("have.attr","type","text")
     
         })
+    })
+
+    it("Verify if the error has propper style",()=>{
+        cy.fixture("loginData").then(data=>{
+        cy.visit(`${data.inregistrare}`)
+        cy.get("main > div > div > div > div.second-container > div > form > div.button-wrapper > button").click();
+
+        cy.contains("label", 'Nume și prenume').find('div').should("have.css","border","2px solid rgb(247, 142, 145)");
+        cy.contains("label", 'Nume și prenume').siblings('p').should("have.css","color","rgb(247, 142, 145)")
+        cy.contains("label", 'Prenume').siblings('p').should("have.css","color","rgb(247, 142, 145)")
+        cy.contains("label", 'Adresa de e-mail').siblings('p').should("have.css","color","rgb(247, 142, 145)")
+        cy.contains("label", 'Parola').siblings('p').should("have.css","color","rgb(247, 142, 145)")
+        })
+        
     })
 })
