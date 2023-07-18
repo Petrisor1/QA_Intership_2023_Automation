@@ -16,9 +16,9 @@
             email: loginData.email,
             password: loginData.password,
           }).then((response) => {
-            //cy.setCookie('sessionId', response.body.sessionId)
+          
             window.localStorage.setItem('token', response.body.auth_token)
-            cy.setCookie('userName', response.body.firstName +" "+ response.body.lastName)
+           
           })
         
           cy.visit(`${loginData.url}/`);
@@ -26,6 +26,21 @@
           cy.get('main > div:nth-child(1) > div > div.second-container-navbar > div > svg').should('be.visible');
           
     })
+  });
+
+  Cypress.Commands.add('loginInvalid', (email, password) => {
+    let rasp;
+    return cy.fixture('loginData').then((loginData) => {
+      return cy.request({
+        method: 'POST',
+        url: loginData.loginRoute,
+        body: {
+          email: email,
+          password: password,
+        },
+        failOnStatusCode: false,
+      });
+    });
   });
 //
 //

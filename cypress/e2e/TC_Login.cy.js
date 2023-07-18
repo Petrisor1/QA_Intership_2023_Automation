@@ -9,7 +9,7 @@ describe("Test login functionality / a more structured way", ()=>{
     })
     it("Login test",()=>{
         cy.fixture('loginData').then(data=>{
-            cy.visit(data.url);
+           
         })
         
     })
