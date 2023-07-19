@@ -12,7 +12,7 @@
 // -- This is a parent command --
  Cypress.Commands.add('login', (email, password) => { 
     cy.fixture('loginData').then((loginData) =>{
-        cy.request('POST', `${loginData.loginRoute}`, {
+        cy.request('POST', `${Cypress.config().baseApiUrl}/api/v1/users/sign_in`, {
             email: loginData.email,
             password: loginData.password,
           }).then((response) => {
@@ -21,7 +21,7 @@
            
           })
         
-          cy.visit(`${loginData.url}/`);
+          cy.visit('/');
           cy.wait(1000);
           cy.get('main > div:nth-child(1) > div > div.second-container-navbar > div > svg').should('be.visible');
           
@@ -33,7 +33,7 @@
     return cy.fixture('loginData').then((loginData) => {
       return cy.request({
         method: 'POST',
-        url: loginData.loginRoute,
+        url: `${Cypress.config().baseApiUrl}/api/v1/users/sign_in`,
         body: {
           email: email,
           password: password,

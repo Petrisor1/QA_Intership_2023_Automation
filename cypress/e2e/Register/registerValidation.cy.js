@@ -2,18 +2,20 @@
 import  "../../support/commands";
 describe("Test registration form",()=>{
   
-    
+    beforeEach(()=>{
+        cy.visit(`/inregistrare`)
+    })
 
     it("Verify registration API functionality",()=>{
         
         let firstName=cy.randomGen();
         let lastName=cy.randomGen();
         let password=cy.randomGen();
-        let email= append(`vasile@`,cy.randomGen()); 
-        cy.fixture("routesForPages").then(data=>{
+        let email= `vasile@${cy.randomGen()}`; 
+        
             cy.request({
                 method:"OPTIONS",
-                url:`${data.registration}`,
+                url:`${Cypress.config().baseApiUrl}/api/v1/users/sign_up`,
              body:{"email":`${email}`,
                 "first_name":`${firstName}`,
                 "last_name": `${lastName}`,
@@ -24,12 +26,12 @@ describe("Test registration form",()=>{
             expect(response.status).to.equal(204);
             
         })
-        })
+       
     })
 
     it("TC91 Verify if is register is possible with no input data",()=>{
         cy.fixture("loginData").then(data=>{
-            cy.visit(`${data.inregistrare}`)
+          
 
             cy.get("main > div > div > div > div.second-container > div > form > div.button-wrapper > button").click();
             // cy.get("main > div > div > div > div.second-container > div > form > div:nth-child(1) > div > p").should("be.visible");
@@ -43,7 +45,7 @@ describe("Test registration form",()=>{
 
     it("TC90 	Verify if input fields recive an apropriate message for inserting special characters data",()=>{
         cy.fixture("loginData").then(data=>{
-            cy.visit(`${data.inregistrare}`)
+           
             cy.get("main > div > div > div > div.second-container > div > form > div.button-wrapper > button").click();
             
             cy.contains("label", 'Nume și prenume').nextAll('div').find('i').next('input').type("%");
@@ -58,7 +60,7 @@ describe("Test registration form",()=>{
     it(" Verify if password input does not accept less than 8 characters ",()=>{
         cy.fixture("loginData").then(data=>{
             
-            cy.visit(`${data.inregistrare}`)
+            
             cy.contains("label", 'Parola').nextAll('div').find('i').next('input').type("1234567");
             cy.get("button[class='auth-register-button-try']").click();
             cy.contains("label", 'Parola').siblings('p').should('have.text','Parola trebuie sa contina minim 8 caractere')
@@ -70,7 +72,7 @@ describe("Test registration form",()=>{
     it("Verify if the email is in a valid format",()=>{
         cy.fixture("loginData").then(data=>{
             let random=cy.randomGen();
-            cy.visit(`${data.inregistrare}`)
+           
             cy.contains("label", 'Adresa de e-mail').nextAll('div').find('i').next('input').type(`${random}`);
             cy.get("button[class='auth-register-button-try']").click();
             cy.contains("label", 'Adresa de e-mail').siblings('p').should('have.text','Introdu o adresa de email corecta. E.g. example@email.com.')
@@ -81,7 +83,7 @@ describe("Test registration form",()=>{
 
     it("Verify the funcitonality of show password icon",()=>{
         cy.fixture("loginData").then(data=>{
-            cy.visit(data.inregistrare);
+            
             cy.get('form input.input-field[placeholder="************"]').should("have.attr","type","password")
 
           
@@ -95,7 +97,7 @@ describe("Test registration form",()=>{
 
     it("Verify if the error has propper style",()=>{
         cy.fixture("loginData").then(data=>{
-        cy.visit(`${data.inregistrare}`)
+        
         cy.get("main > div > div > div > div.second-container > div > form > div.button-wrapper > button").click();
 
         cy.contains("label", "Nume și prenume").next("div").should("have.css","border","2px solid rgb(247, 142, 145)");

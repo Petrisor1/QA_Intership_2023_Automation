@@ -2,11 +2,11 @@ import "../../support/commands";
 
 describe("Test login funtionality through interface", () => {
   beforeEach(() => {
-    cy.visit('https://amprenta.at.assistcloud.services/conectare');
+    cy.visit('/conectare');
   })
   it("TC28 Verify if user is able to login with valid data", () => {
-    cy.fixture("loginData").then((data) => {
-      cy.visit(`${data.url}/conectare`);
+   
+     cy.fixture('loginData').then((data)=>{
       cy.get(
         'form input.input-field[placeholder="namesurname@domain.com"]'
       ).type(data.email);
@@ -18,12 +18,14 @@ describe("Test login funtionality through interface", () => {
       ).click();
       // cy.get('main > div:nth-child(1) > div > div.second-container-navbar > div > svg').should("be.visible");
       cy.get("div[class='auth-user']").should("be.visible");
-    });
+     })
+      
+    
   });
 
   it("TC30 Verify if a user is able to login with valid email and invalid password", () => {
     let randomPass = cy.randomGen();
-    cy.fixture("routesForPages").then((data) => {
+    cy.fixture('loginData').then((data)=>{
       cy.get(
         'form input.input-field[placeholder="namesurname@domain.com"]'
       ).type(`${data.email}`);
@@ -36,12 +38,12 @@ describe("Test login funtionality through interface", () => {
       cy.get(
         "main > div > div > div > div.second-container > div > div > span"
       ).should("be.visible");
-    });
+      })
   });
 
   it("TC36 Verify if is abled to login with only correct password and invalid email", () => {
     let random = cy.randomGen();
-    cy.fixture("routesForPages").then((data) => {
+    cy.fixture('loginData').then((data)=>{
       cy.get(
         'form input.input-field[placeholder="namesurname@domain.com"]'
       ).type(`${random}`);
@@ -54,11 +56,11 @@ describe("Test login funtionality through interface", () => {
       cy.get(
         "main > div > div > div > div.second-container > div > div > span"
       ).should("be.visible");
-    });
+      })
   });
 
   it("Verify if is able to login with both empty required fields", () => {
-    cy.fixture("routesForPages").then((data) => {
+   
       cy.get(
         'form input.input-field[placeholder="namesurname@domain.com"]'
       ).type(" ");
@@ -69,11 +71,11 @@ describe("Test login funtionality through interface", () => {
       cy.get(
         "main > div > div > div > div.second-container > div > div > span"
       ).should("be.visible");
-    });
+    
   });
 
   it("TC37 Check if the hide/show password button makes the password visible ", () => {
-    cy.fixture("routesForPages").then((data) => {
+  
       cy.get('form input.input-field[placeholder="************"]').should(
         "have.attr",
         "type",
@@ -89,11 +91,11 @@ describe("Test login funtionality through interface", () => {
         "type",
         "text"
       );
-    });
+    
   });
 
   it("TC55	Verify if 'Inregistrează-te' button functionality works", () => {
-    cy.fixture("routesForPages").then((data) => {
+    
       cy.get(
         "main > div > div > div > div.second-container > div > form > div.auth-wrapper > a"
       ).click();
@@ -101,11 +103,11 @@ describe("Test login funtionality through interface", () => {
         "eq",
         "https://amprenta.at.assistcloud.services/inregistrare"
       );
-    });
+   
   });
 
   it("Verify if the error has propper style", () => {
-    cy.fixture("routesForPages").then((data) => {
+   
             cy.get("button[class='auth-register-button-try']").click();
 
       cy.contains("label", "Adresa de e-mail")
@@ -114,6 +116,6 @@ describe("Test login funtionality through interface", () => {
       cy.contains("label", "Parola")
         .next("div")
         .should("have.css", "border", "2px solid rgb(247, 142, 145)");
-    });
+  
   });
 });

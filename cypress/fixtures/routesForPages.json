@@ -1,5 +1,0 @@
-{
-    "conectare":"https://amprenta.at.assistcloud.services/conectare",
-    "registration":"https://api.amprenta.at.assistcloud.services/api/v1/users/sign_up",
-    "mainPage":"https://amprenta.at.assistcloud.services/"
-}
