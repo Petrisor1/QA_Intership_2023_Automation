@@ -1,18 +1,23 @@
 
-
+import  "../../support/commands";
 describe("Test registration form",()=>{
   
     
 
     it("Verify registration API functionality",()=>{
+        
+        let firstName=cy.randomGen();
+        let lastName=cy.randomGen();
+        let password=cy.randomGen();
+        let email= append(`vasile@`,cy.randomGen()); 
         cy.fixture("routesForPages").then(data=>{
             cy.request({
                 method:"OPTIONS",
                 url:`${data.registration}`,
-             body:{"email":"zitatuturor@gmail.com",
-                "first_name":"venus",
-                "last_name": "zeita",
-                "password": "test123asdf"
+             body:{"email":`${email}`,
+                "first_name":`${firstName}`,
+                "last_name": `${lastName}`,
+                "password": `${password}`
             },
             failOnStatusCode: false,
         }).then(response=>{
@@ -52,6 +57,7 @@ describe("Test registration form",()=>{
 
     it(" Verify if password input does not accept less than 8 characters ",()=>{
         cy.fixture("loginData").then(data=>{
+            
             cy.visit(`${data.inregistrare}`)
             cy.contains("label", 'Parola').nextAll('div').find('i').next('input').type("1234567");
             cy.get("button[class='auth-register-button-try']").click();
@@ -63,8 +69,9 @@ describe("Test registration form",()=>{
 
     it("Verify if the email is in a valid format",()=>{
         cy.fixture("loginData").then(data=>{
+            let random=cy.randomGen();
             cy.visit(`${data.inregistrare}`)
-            cy.contains("label", 'Adresa de e-mail').nextAll('div').find('i').next('input').type("petrisorc65.gmail.com");
+            cy.contains("label", 'Adresa de e-mail').nextAll('div').find('i').next('input').type(`${random}`);
             cy.get("button[class='auth-register-button-try']").click();
             cy.contains("label", 'Adresa de e-mail').siblings('p').should('have.text','Introdu o adresa de email corecta. E.g. example@email.com.')
             .should("be.visible")

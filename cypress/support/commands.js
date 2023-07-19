@@ -42,6 +42,31 @@
       });
     });
   });
+
+
+  Cypress.Commands.add("randomGen",()=>{
+    {
+      var text = "";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  
+      for (var i = 0; i < 10; i++)
+      {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+      }
+      
+      return text;
+    }
+  })
+
+  Cypress.Commands.add("randomNumber",()=>{
+    const minNumber = 100; 
+    const maxNumber = 999; 
+    const randomNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+    
+    console.log("Acesta este numărul random: " + randomNumber);
+    return randomNumber;
+  })
 //
 //
 // -- This is a child command --

@@ -14,7 +14,8 @@ describe("Test API login functionality", ()=>{
        //raspunsul primit de la cerere (pentru a putea testa logarea invalida)
        
        cy.fixture("loginData").then((data)=>{
-            cy.loginInvalid(data.email,"123").then(resp=>{
+        let  randomPass= cy.randomGen();
+            cy.loginInvalid(data.email,`${randomPass}`).then(resp=>{
            expect(resp.status).to.equal(401);
            expect(resp.body).to.have.property('error_msg',"Invalid Credentials")
            });
@@ -30,8 +31,9 @@ describe("Test API login functionality", ()=>{
     })
 
     it(" Verify if is abled to login with only correct password and invalid email",()=>{
-       cy.fixture("loginData").then(data=>{
-        cy.loginInvalid("",data.password).then(resp=>{
+        let  invalidEmail= cy.randomGen();
+        cy.fixture("loginData").then(data=>{
+        cy.loginInvalid(`${invalidEmail}`,data.password).then(resp=>{
             expect(resp.status).to.equal(401);
             expect(resp.body).to.have.property('error_msg',"Invalid Credentials")
         })
