@@ -2,6 +2,8 @@
 
 describe("Test registration form",()=>{
   
+    
+
     it("Verify registration API functionality",()=>{
         cy.fixture("routesForPages").then(data=>{
             cy.request({
@@ -89,7 +91,12 @@ describe("Test registration form",()=>{
         cy.visit(`${data.inregistrare}`)
         cy.get("main > div > div > div > div.second-container > div > form > div.button-wrapper > button").click();
 
-        cy.contains("label", 'Nume și prenume').find('div').should("have.css","border","2px solid rgb(247, 142, 145)");
+        cy.contains("label", "Nume și prenume").next("div").should("have.css","border","2px solid rgb(247, 142, 145)");
+        cy.contains("label", "Prenume").next("div").should("have.css","border","2px solid rgb(247, 142, 145)");
+        cy.contains("label", "Adresa de e-mail").next("div").should("have.css","border","2px solid rgb(247, 142, 145)");
+        cy.contains("label", "Parola").next("div").should("have.css","border","2px solid rgb(247, 142, 145)");
+        
+
         cy.contains("label", 'Nume și prenume').siblings('p').should("have.css","color","rgb(247, 142, 145)")
         cy.contains("label", 'Prenume').siblings('p').should("have.css","color","rgb(247, 142, 145)")
         cy.contains("label", 'Adresa de e-mail').siblings('p').should("have.css","color","rgb(247, 142, 145)")
@@ -97,4 +104,5 @@ describe("Test registration form",()=>{
         })
         
     })
+  
 })

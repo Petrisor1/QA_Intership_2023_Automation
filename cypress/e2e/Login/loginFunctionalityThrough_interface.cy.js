@@ -66,4 +66,16 @@ describe("Test login funtionality through interface",()=>{
             cy.url().should("eq","https://amprenta.at.assistcloud.services/inregistrare");
         })
     })
+
+    it("Verify if the error has propper style",()=>{
+        cy.fixture("routesForPages").then(data=>{
+            cy.visit(`${data.conectare}`)
+            cy.get("button[class='auth-register-button-try']").click();
+    
+            cy.contains("label","Adresa de e-mail").next("div").should("have.css","border","2px solid rgb(247, 142, 145)");
+            cy.contains("label","Parola").next("div").should("have.css","border","2px solid rgb(247, 142, 145)");
+        
+            })
+            
+    })
 })
