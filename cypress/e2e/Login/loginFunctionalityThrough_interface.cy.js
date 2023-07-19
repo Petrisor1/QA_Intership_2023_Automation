@@ -1,6 +1,9 @@
 import "../../support/commands";
 
 describe("Test login funtionality through interface", () => {
+  beforeEach(() => {
+    cy.visit('https://amprenta.at.assistcloud.services/conectare');
+  })
   it("TC28 Verify if user is able to login with valid data", () => {
     cy.fixture("loginData").then((data) => {
       cy.visit(`${data.url}/conectare`);
@@ -21,7 +24,6 @@ describe("Test login funtionality through interface", () => {
   it("TC30 Verify if a user is able to login with valid email and invalid password", () => {
     let randomPass = cy.randomGen();
     cy.fixture("routesForPages").then((data) => {
-      cy.visit(`${data.conectare}`);
       cy.get(
         'form input.input-field[placeholder="namesurname@domain.com"]'
       ).type(`${data.email}`);
@@ -40,7 +42,6 @@ describe("Test login funtionality through interface", () => {
   it("TC36 Verify if is abled to login with only correct password and invalid email", () => {
     let random = cy.randomGen();
     cy.fixture("routesForPages").then((data) => {
-      cy.visit(`${data.conectare}`);
       cy.get(
         'form input.input-field[placeholder="namesurname@domain.com"]'
       ).type(`${random}`);
@@ -58,7 +59,6 @@ describe("Test login funtionality through interface", () => {
 
   it("Verify if is able to login with both empty required fields", () => {
     cy.fixture("routesForPages").then((data) => {
-      cy.visit(`${data.conectare}`);
       cy.get(
         'form input.input-field[placeholder="namesurname@domain.com"]'
       ).type(" ");
@@ -74,7 +74,6 @@ describe("Test login funtionality through interface", () => {
 
   it("TC37 Check if the hide/show password button makes the password visible ", () => {
     cy.fixture("routesForPages").then((data) => {
-      cy.visit(data.conectare);
       cy.get('form input.input-field[placeholder="************"]').should(
         "have.attr",
         "type",
@@ -95,7 +94,6 @@ describe("Test login funtionality through interface", () => {
 
   it("TC55	Verify if 'Inregistrează-te' button functionality works", () => {
     cy.fixture("routesForPages").then((data) => {
-      cy.visit(`${data.conectare}`);
       cy.get(
         "main > div > div > div > div.second-container > div > form > div.auth-wrapper > a"
       ).click();
@@ -108,8 +106,7 @@ describe("Test login funtionality through interface", () => {
 
   it("Verify if the error has propper style", () => {
     cy.fixture("routesForPages").then((data) => {
-      cy.visit(`${data.conectare}`);
-      cy.get("button[class='auth-register-button-try']").click();
+            cy.get("button[class='auth-register-button-try']").click();
 
       cy.contains("label", "Adresa de e-mail")
         .next("div")
