@@ -62,10 +62,10 @@
   Cypress.Commands.add("randomNumber",()=>{
     const minNumber = 100; 
     const maxNumber = 999; 
-    const randomNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
-    
+    const randomNumber =parseInt( Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber);
+    let nr=randomNumber;
     console.log("Acesta este numărul random: " + randomNumber);
-    return randomNumber;
+    return nr;
   })
 //
 //
