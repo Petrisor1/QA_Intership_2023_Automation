@@ -1,22 +1,24 @@
 import "../../support/commands";
 
+import Login from "../../integration/PageObject/login.js";
+
 describe("Test login funtionality through interface", () => {
+  const login = new Login;
   beforeEach(() => {
-    cy.visit('/conectare');
+    // cy.visit('/conectare');
+
+   
+    login.navigate();
+  
   })
   it("TC28 Verify if user is able to login with valid data", () => {
    
      cy.fixture('loginData').then((data)=>{
-      cy.get(
-        'form input.input-field[placeholder="namesurname@domain.com"]'
-      ).type(data.email);
-      cy.get('form input.input-field[placeholder="************"]').type(
-        `${data.password}`
-      );
-      cy.get(
-        "main > div > div > div > div.second-container > div > form > div.button-wrapper > button"
-      ).click();
-      // cy.get('main > div:nth-child(1) > div > div.second-container-navbar > div > svg').should("be.visible");
+
+      login.email(`${data.email}`);
+      login.password(`${data.password}`);
+      login.submit();
+
       cy.get("div[class='auth-user']").should("be.visible");
      })
       
@@ -26,15 +28,10 @@ describe("Test login funtionality through interface", () => {
   it("TC30 Verify if a user is able to login with valid email and invalid password", () => {
     let randomPass = cy.randomGen();
     cy.fixture('loginData').then((data)=>{
-      cy.get(
-        'form input.input-field[placeholder="namesurname@domain.com"]'
-      ).type(`${data.email}`);
-      cy.get('form input.input-field[placeholder="************"]').type(
-        `${randomPass}`
-      );
-      cy.get(
-        "main > div > div > div > div.second-container > div > form > div.button-wrapper > button"
-      ).click();
+      login.email(`${data.email}`);
+      login.password(`${randomPass}`);
+      login.submit();
+
       cy.get(
         "main > div > div > div > div.second-container > div > div > span"
       ).should("be.visible");
@@ -44,15 +41,12 @@ describe("Test login funtionality through interface", () => {
   it("TC36 Verify if is abled to login with only correct password and invalid email", () => {
     let random = cy.randomGen();
     cy.fixture('loginData').then((data)=>{
-      cy.get(
-        'form input.input-field[placeholder="namesurname@domain.com"]'
-      ).type(`${random}`);
-      cy.get('form input.input-field[placeholder="************"]').type(
-        `${data.password}`
-      );
-      cy.get(
-        "main > div > div > div > div.second-container > div > form > div.button-wrapper > button"
-      ).click();
+
+       login.email(`${random}`);
+
+      login.password(`${data.password}`);
+
+      login.submit();
       cy.get(
         "main > div > div > div > div.second-container > div > div > span"
       ).should("be.visible");
@@ -61,13 +55,12 @@ describe("Test login funtionality through interface", () => {
 
   it("Verify if is able to login with both empty required fields", () => {
    
-      cy.get(
-        'form input.input-field[placeholder="namesurname@domain.com"]'
-      ).type(" ");
-      cy.get('form input.input-field[placeholder="************"]').type(" ");
-      cy.get(
-        "main > div > div > div > div.second-container > div > form > div.button-wrapper > button"
-      ).click();
+    login.email(` `);
+
+    login.password(` `);
+
+    login.submit();
+
       cy.get(
         "main > div > div > div > div.second-container > div > div > span"
       ).should("be.visible");
